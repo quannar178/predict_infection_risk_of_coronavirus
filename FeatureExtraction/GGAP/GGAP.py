@@ -45,7 +45,7 @@ kw = {'path': r"H_train.txt", 'order': 'ACDEFGHIKLMNPQRSTVWY'}
 
 if __name__ == "__main__":
     fastas1 = readFasta.readFasta(r"data.fasta")
-    result, header = GGAP(fastas1, 1, **kw)
+    result, header = GGAP(fastas1, 3, **kw)
     data1 = np.matrix(result[1:])[:, 1:]
     data2 = np.matrix(result[1:])
 
