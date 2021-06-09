@@ -13,31 +13,24 @@ np.random.seed(42)
 style.use('fivethirtyeight')
 
 
-def transformData(X, Y):
-    X1, Y1 = [], []
-    idx = 0
-    for i, row in Y.iterrows():
-        try:
-            X1.append(X.iloc[idx])
-            Y1.append(row)
-        except ValueError:
-            print("error")
-        finally:
-            idx = idx + 1
-
-    # for i in range(0, len(X1)):
-    #     X.add(X1[i])
-    #     Y.add(Y1[i])
-    for x in X1:
-        X.append(pd.DataFrame(x.values, columns=X.columns.values))
-    for y in Y1:
-        Y.append(pd.DataFrame(y.values, columns=Y.columns.values))
-    return X, Y
+def transformData(X, y):
+    reps = [4 if val['1'] == 1 else 1 for val in y.iloc]
+    X = X.loc[np.repeat(X.index.values, reps)]
+    y = y.loc[np.repeat(y.index.values, reps)]
+    return X, y
 
 
 if __name__ == "__main__":
+    type = 'AAC'  # AAC PSE GGAP
+    file = ''
+    if type == 'AAC':
+        file = "../FeatureExtraction/AAC/AAC_data.csv"
+    elif type == 'PSE':
+        file = "../FeatureExtraction/PseAAC/PseAAC_data.csv"
+    else:
+        file = "../FeatureExtraction/GGAP/GGAP_data.csv"
     X = pd.read_csv(
-        "../FeatureExtraction/GGAP/GGAP_data.csv", index_col=0, header=1)
+        file, index_col=0, header=1)
     y = pd.read_csv("./target_data.csv", index_col=0, header=1)
     X_train, X_test, y_train, y_test = [], [], [], []
     skf = StratifiedKFold(n_splits=10)
