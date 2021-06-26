@@ -36,8 +36,15 @@ def plot_feature_importance(fi):
 
 
 def multidimensional_scaling_method(data):
-    clf = MDS(n_components=2, random_state=np.random.RandomState(seed=7))
-    x_mds = clf.fit_transform(data[['LN', 'SI']].to_numpy()[:507])
+    clf = MDS(n_components=2)
+    x_mds = clf.fit_transform(data[['LN', 'SI']].to_numpy()[:507], init=np.array([
+        [0.003427592116538132, 0.007712082262210797],
+        [0.003427592116538132, 0.007712082262210797],
+        [0.013245033112582781, 0.007358351729212656],
+        [0.012555391432791729, 0.00812407680945347],
+        [0.00815418828762046, 0.005930318754633061],
+        [0.0015987210231814548, 0.004796163069544364]
+    ]))
     # y = [
     #     [0.003427592116538132, 0.007712082262210797],
     #     [0.003427592116538132, 0.007712082262210797],
